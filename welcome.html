@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome to Blockbuster</title>
+
+    <link rel="stylesheet", href="css/welcome.css">
+
     <!--Bootstrap stuff-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -14,13 +17,42 @@
 <div class="jumbotron d-flex align-items-center">
     <div class="container">
         <h1 class="display-3 text-center">Welcome to...</h1>
-        <img class="center-block" src="resources/Blockbuster_logo.svg" height="100">
+        <div class="text-center"><img class="block-center" src="resources/Blockbuster_logo.svg" height="100"></div>
         <p class="lead">A place to log and share your multimedia history</p>
 
         <hr class="my-4">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-info">Register</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">Login</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#register-modal">Register</button>
+        </div>
+    </div>
+</div>
+
+<!--login modal-->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h2>Login to Your Account</h2><br>
+            <form>
+                Username:<input class="form-control" type="text" name="username" placeholder="Username" required>
+                Password:<input class="form-control" type="password" name="pass" required> <br />
+                <input type="submit" name="login" class="form-control btn-block btn-primary" value="Login">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--register modal-->
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h2>Create an account</h2><br>
+            <form>
+                Username: <input class="form-control" type="text" name="username" placeholder="nelson" required>
+                Password:<input class="form-control" type="password" name="pass" required>
+                Confirm Password:<input class="form-control" type="password" name="pass" required> <br />
+                <input type="submit" name="register" class="form-control btn-block btn-primary" value="Login">
+            </form>
         </div>
     </div>
 </div>
