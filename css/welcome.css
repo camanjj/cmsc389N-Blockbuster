@@ -13,3 +13,8 @@
 .login {
 
 }
+
+body {
+    background-color: #0943A2 !important;
+    /*color: #0943A2;*/
+}
