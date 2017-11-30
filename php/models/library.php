@@ -1,6 +1,7 @@
 <?php
-
+declare(strict_types=1);
 require_once "../dbLogin.php";
+require_once "media.php";
 
 class Library implements JsonSerializable {
 
@@ -37,9 +38,12 @@ class Library implements JsonSerializable {
             $media = [];
             while($row = mysqli_fetch_array($result)) {
                 // TODO: create the media items for the library
+                array_push($media, new Media($row["name"], $row["genre"], $row["year"], $row["poster"]));
             }
+            $lib->media = $media;
         }
 
+        // return all the libraries with all of the media for them
         return $libraries;
 
     }

@@ -1,5 +1,6 @@
 <?
 
+declare(strict_types=1);
 require_once "../dbLogin.php";
 
 class User
