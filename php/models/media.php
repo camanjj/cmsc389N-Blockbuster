@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once("dbLogin.php");
+require_once("../dbLogin.php");
 
 class Media implements JsonSerializable {
     private $name;
