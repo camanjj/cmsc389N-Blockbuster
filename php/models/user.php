@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 require_once "../dbLogin.php";
+require_once "library.php";
 
 class User
 {
@@ -50,7 +51,9 @@ class User
         }
 
         $user_row = mysqli_fetch_row($result);
+
         // create the default libraries for the user
+        Library::createDefaultLibraries($user_row["id"]);
 
         $result->free();
 

@@ -37,17 +37,32 @@ class Library implements JsonSerializable {
             $result = $db_connection->query("select * form Library where user_id=$userId");
             $media = [];
             while($row = mysqli_fetch_array($result)) {
-                // TODO: create the media items for the library
                 array_push($media, new Media($row["name"], $row["genre"], $row["year"], $row["poster"]));
             }
             $lib->media = $media;
         }
+
+        $result->free();
 
         // return all the libraries with all of the media for them
         return $libraries;
 
     }
 
+    static function createDefaultLibraries(int $userId)
+    {
+
+        global $db_connection;
+        $names = ["Watch Again", "Current", "Public"];
+
+        foreach ($names as $name) {
+            $desc = "";
+            $result = $db_connection->query("insert into Library (user_id, name, description, is_shared) values ($userId, $name, $desc, false)");
+            $result->free();
+        }
+
+    }
+    
     public function jsonSerialize() {
         return (object) get_object_vars($this);
     }
