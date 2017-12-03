@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Welcome to Blockbuster</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Blockbuster</title>
 
-        <link rel="stylesheet" href="css/welcome.css">
+    <link rel="stylesheet" href="css/welcome.css">
 
-        <!--Bootstrap stuff-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <!--Bootstrap stuff-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
 
-    </head>
+</head>
 <body bgcolor="#f0f8ff">
 
 <div class="jumbotron d-flex align-items-center">
@@ -36,8 +41,9 @@
         <div class="modal-container modal-content">
             <h2>Login to Your Account</h2><br>
             <form id="loginForm">
-                Username:<input id="lg-username" class="form-control" type="text" name="username" placeholder="giveUsAnA" required>
-                Password:<input id="lg-password" class="form-control" type="password" name="pass" required> <br />
+                Username:<input id="lg-username" class="form-control" type="text" name="username"
+                                placeholder="giveUsAnA" required>
+                Password:<input id="lg-password" class="form-control" type="password" name="pass" required> <br/>
                 <input type="submit" name="login" class="form-control btn-block btn-primary" value="Login">
             </form>
         </div>
@@ -45,14 +51,17 @@
 </div>
 
 <!--register modal-->
-<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-container modal-content">
             <h2>Create an account</h2><br>
             <form id="registerForm">
-                Username: <input id="rg-username" class="form-control" type="text" name="username" placeholder="nelson" required>
+                Username: <input id="rg-username" class="form-control" type="text" name="username" placeholder="nelson"
+                                 required>
                 Password:<input id="rg-password" class="form-control" type="password" name="pass" required>
-                Confirm Password:<input id="rg-password2" class="form-control" type="password" name="pass" required> <br />
+                Confirm Password:<input id="rg-password2" class="form-control" type="password" name="pass" required>
+                <br/>
                 <input type="submit" name="register" class="form-control btn-block btn-primary" value="Login">
             </form>
         </div>
@@ -63,31 +72,41 @@
 
     // $('#loginForm').onsubmit = login;
 
-    $('#loginForm').submit(() => {
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        console.log("test");
 
-        let username = $('#lg-username').val()
-        let password = $('#lg-password').val()
+        let username = $('#lg-username').val();
+        let password = $('#lg-password').val();
+
+        let data = {
+            "action": "login",
+            "username": username,
+            "password": password
+        };
 
         // send request to server
-        $.post("users/handler.php", data, (data, status, xhr) => {
-            if (status == "200") {
+        $.post("php/api.php", data, (data, status, xhr) => {
+            if (status === "success") {
                 // move to next page
             } else {
                 // there was an issue
+                alert("Wrong Login")
             }
-        })
+        });
 
         return false;
     });
 
-    $('#registerForm').submit(() => {
+    $('#registerForm').submit(function(e) {
+        e.preventDefault();
 
-        let username = $('#rg-username').val()
-        let password = $('#rg-password').val()
-        let password2 = $('#rg-password2').val()
+        let username = $('#rg-username').val();
+        let password = $('#rg-password').val();
+        let password2 = $('#rg-password2').val();
 
         if (password !== password2) {
-            alert("Passwords do not match")
+            alert("Passwords do not match");
             return false;
         }
 
@@ -95,15 +114,17 @@
             "action": "register",
             "username": username,
             "password": password
-        }
+        };
 
-        $.post("users/handler.php", data, (data, status, xhr) => {
-            if (status == "200") {
+        $.post("php/api.php", data, (data, status, xhr) => {
+            console.log(data);
+            if (status === "success") {
                 // move to next page
             } else {
                 // there was an issue
+                alert("Issue creating account")
             }
-        })
+        });
 
         return false;
     });

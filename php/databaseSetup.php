@@ -22,7 +22,7 @@ if (!$result) {
     die("CREATE User TABLE failed: " . $db_connection->error);
 }
 
-$query = "CREATE TABLE Media (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(255), genre VARCHAR(60), year VARCHAR(4), poster TEXT, PRIMARY KEY (id))";
+$query = "CREATE TABLE Media (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(255), genre VARCHAR(60), year VARCHAR(4), poster TEXT, imdb_id VARCHAR(255), PRIMARY KEY (id))";
 
 /* Create Media table */
 $result = $db_connection->query($query);
