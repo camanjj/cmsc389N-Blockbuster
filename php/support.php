@@ -43,7 +43,7 @@ function generatePage($body, $title="Example") {
         </form>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Logout</a>
+                <a class="nav-link" href="logout.php">Logout, {$_SESSION["username"]}</a>
             </li>
         </ul>
     </div>

@@ -47,8 +47,9 @@ $html = <<<BODY
         <input class="form-check-input" type="radio" name="isShared" id="shared" value="0" $noChecked>No
       </label>
     </div><br>
-    <button type="button" class="btn btn-primary offset-md-4 col-md-4 text-center">Update Library</button>
+    
     </form>
+    <button onclick="handleSubmit()" type="button" class="btn btn-primary offset-md-4 col-md-4 text-center">Update Library</button>
 </div>
 <br />
 
@@ -57,12 +58,13 @@ $html = <<<BODY
 
 <script>
 
-$('#form').submit(function(e) {
-    e.preventDefault();
+function handleSubmit(event) {
 
     let name = $('#libName').val();
     let description = $('#libDesc').val();
     let isShared = $('input[type=radio]').filter(':checked').first().val();
+
+    console.log(isShared);
 
     let data = {
         "action": "editLibrary",
@@ -72,6 +74,7 @@ $('#form').submit(function(e) {
         "libId": {$lib->id}
     };
 
+    console.log("Avout to send");
     // send request to server
     $.post("php/api.php", data, (data, status, xhr) => {
         console.log(data);
@@ -85,7 +88,7 @@ $('#form').submit(function(e) {
     });
 
     return false;
-});
+}
 
 
 </script>
@@ -93,8 +96,3 @@ $('#form').submit(function(e) {
 BODY;
 
 echo generatePage($html);
-
-
-
-
-?>
