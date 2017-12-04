@@ -51,6 +51,7 @@ $html = <<<BODY
 <script>
 
     let selectedMedia;
+    let results;
     let xhrz;
     new autoComplete({
         selector: 'input[name="search"]',
@@ -68,6 +69,7 @@ $html = <<<BODY
             xhrz = jQuery.get(`http://www.omdbapi.com/?apikey=412dcdca&s=`+term, function(data){
                 console.log(data);
                 if (data.hasOwnProperty("Search")) {
+                    results = data;
                     response(data.Search);
                 } else {
                     response([]);
@@ -81,7 +83,7 @@ $html = <<<BODY
             return '<div class="autocomplete-suggestion" data-val="' + item.Title + '">' + item.Title.replace(re, "<b>$1</b>") + '</div>';
         },
         onSelect: function(event, term, item) {
-            selectedMedia = fakeResult.Search.filter((e) => e.Title === term)[0];
+            selectedMedia = results.Search.filter((e) => e.Title === term)[0];
 
             document.getElementById("cardImage").src = selectedMedia.Poster;
             document.getElementById("cardTitle").textContent = selectedMedia.Title;
