@@ -29,7 +29,9 @@ foreach ($sharedLibraries as $lib) {
 
     $items = "<ul class=\"list-group list-group-flush\">";
     foreach ($lib->media as $media) {
-        $items .= "<a href='http://imdb.com/title/{$media->imdbId}' ><li class=\"list-group-item {$style} \">{$media->getName()}</li></a>";
+      $items .= "<a href='http://imdb.com/title/{$media->imdbId}' ><li class=\"list-group-item {$style} \">";
+      $items .= "<img src={$media->getPoster()} width=\"80\" height=\"100\" /><br>";
+      $items .= "{$media->getName()}</li></a>";
     }
     $items .= "</ul>";
 
@@ -42,7 +44,7 @@ foreach ($sharedLibraries as $lib) {
     <h4 class="card-title">$lib->name</h4>
     <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
     <p class="card-text">$lib->description</p>
-    
+
     $items
   </div>
 </div>
@@ -54,4 +56,3 @@ $html .= "</div>";
 
 
 echo generatePage($html);
-
