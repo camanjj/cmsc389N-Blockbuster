@@ -31,7 +31,7 @@ foreach ($libraries as $lib) {
     <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
     <p class="card-text">$lib->description</p>
     <a href="addMedia.php" class="card-link">Add Movie/Show</a>
-    <a href="editLibray.php?libraryId={$lib->id}" class="card-link">Edit Library</a>
+    <a href="editLibrary.php?libraryId={$lib->id}" class="card-link">Edit Library</a>
     
     $items
   </div>
