@@ -51,6 +51,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(200);
             echo "";
         }
+    } else if ($action === "editLibrary") {
+        $lib = Library::getLibraryById($_POST["libId"]);
+        if (isset($_POST["name"])) {
+            $lib->name = $_POST["name"];
+        }
+
+        if (isset($_POST["description"])) {
+            $lib->description = $_POST["desciption"];
+        }
+
+        if (isset($_POST["is_shared"])) {
+            $lib->is_shared = $_POST["is_shared"];
+        }
+
+        $lib->updateLibrary();
+        http_response_code(200);
+
+
     }
 
 
