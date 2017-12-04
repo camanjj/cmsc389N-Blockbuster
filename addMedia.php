@@ -50,8 +50,6 @@ $html = <<<BODY
     
 <script>
 
-    let fakeResult = JSON.parse("{\"Search\":[{\"Title\":\"House of Cards\",\"Year\":\"2013–\",\"imdbID\":\"tt1856010\",\"Type\":\"series\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMjM3ODMyMjc3MV5BMl5BanBnXkFtZTgwNDgzNDc5NzE@._V1_SX300.jpg\"},{\"Title\":\"House of Wax\",\"Year\":\"2005\",\"imdbID\":\"tt0397065\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BNDA4Nzg1NjQ2NV5BMl5BanBnXkFtZTcwMDYwNTgyMQ@@._V1_SX300.jpg\"},{\"Title\":\"House of Flying Daggers\",\"Year\":\"2004\",\"imdbID\":\"tt0385004\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMzg4MDE0NzIwNl5BMl5BanBnXkFtZTcwMDI2NDcyMQ@@._V1_SX300.jpg\"},{\"Title\":\"House of 1000 Corpses\",\"Year\":\"2003\",\"imdbID\":\"tt0251736\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BNjUyNjU0NDE0OV5BMl5BanBnXkFtZTYwNzcwMzg3._V1_SX300.jpg\"},{\"Title\":\"House at the End of the Street\",\"Year\":\"2012\",\"imdbID\":\"tt1582507\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMjIxNTUwNTU4N15BMl5BanBnXkFtZTcwNTE0MTI3Nw@@._V1_SX300.jpg\"},{\"Title\":\"House of Sand and Fog\",\"Year\":\"2003\",\"imdbID\":\"tt0315983\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMTIzMjQ5NzM2M15BMl5BanBnXkFtZTYwMzU2NDY3._V1_SX300.jpg\"},{\"Title\":\"The House of the Devil\",\"Year\":\"2009\",\"imdbID\":\"tt1172994\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxMDAxODg5ODReQTJeQWpwZ15BbWU3MDI5ODYxODI@._V1_SX300.jpg\"},{\"Title\":\"House of the Dead\",\"Year\":\"2003\",\"imdbID\":\"tt0317676\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMTQwMTU1MzIyNV5BMl5BanBnXkFtZTYwODM4NTc2._V1_SX300.jpg\"},{\"Title\":\"House of Lies\",\"Year\":\"2012–2016\",\"imdbID\":\"tt1797404\",\"Type\":\"series\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BMjM2NDI0MTc5MV5BMl5BanBnXkFtZTgwMjEzNTQxODE@._V1_SX300.jpg\"},{\"Title\":\"Man of the House\",\"Year\":\"2005\",\"imdbID\":\"tt0331933\",\"Type\":\"movie\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BODY3Nzg2NDQ5Ml5BMl5BanBnXkFtZTcwOTQ5MDgyMQ@@._V1_SX300.jpg\"}],\"totalResults\":\"1187\",\"Response\":\"True\"}")
-    console.log(fakeResult);
     let selectedMedia;
     let xhrz;
     new autoComplete({
@@ -67,16 +65,15 @@ $html = <<<BODY
             if (term.length <= 5) {
                 return;
             }
-            response(fakeResult.Search);
-//            xhrz = jQuery.get(`http://www.omdbapi.com/?apikey=412dcdca&s=`+term, function(data){
-//                console.log(data);
-//                if (data.hasOwnProperty("Search")) {
-//                    response(data.Search);
-//                } else {
-//                    response([]);
-//                }
-//
-//            });
+            xhrz = jQuery.get(`http://www.omdbapi.com/?apikey=412dcdca&s=`+term, function(data){
+                console.log(data);
+                if (data.hasOwnProperty("Search")) {
+                    response(data.Search);
+                } else {
+                    response([]);
+                }
+
+            });
         },
         renderItem: function (item, search) {
             search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
