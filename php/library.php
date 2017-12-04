@@ -51,6 +51,16 @@ class Library implements JsonSerializable {
 
     }
 
+    static function getLibraryById(int $libId){
+      global $db_connection;
+
+      $result = $db_connection->query("SELECT name, description, is_shared FROM Library WHERE id = $libId");
+      $row = $result->fetch_assoc();
+      $resultingLibrary = new Library((int)$row["libId"], $userId, $row["name"], $row["description"], (bool)$row["is_shared"]);
+
+      return $resultingLibrary;
+    }
+
     static function createDefaultLibraries(int $userId)
     {
 
