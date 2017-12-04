@@ -9,23 +9,29 @@ class User
 
     public $username;
 
-    static function login(string $username, string $password): int
+    static function login(string $username, string $password): ?int
     {
         // check database
         global $db_connection;
 
-        $password = password_hash($password, PASSWORD_DEFAULT);
-
-        $result = $db_connection->query("select * from User where username=$username and password=$password");
-        $user_row = mysqli_fetch_row($result);
-
-        if (mysqli_num_rows($result) != 1) {
-            return -1;
+        $result = $db_connection->query("SELECT * FROM User WHERE username='$username'");
+        if (!$result) {
+            trigger_error('Invalid query: ' . $db_connection->error);
+            return null;
         }
 
-        $result->free();
+        if ($result->num_rows == 0) {
+            return null;
+        }
 
-        return $user_row[0];
+        $user_row = $result->fetch_assoc();
+
+
+        if (!password_verify($password, $user_row["password"])) {
+            return null;
+        }
+
+        return (int)$user_row['id'];
     }
 
     static function register(string $username, string $password): ?int

@@ -9,39 +9,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $_POST["action"];
 
-    if ($action == "register") {
+    if ($action === "register") {
         // attempt to register a new user
         $id = User::register($_POST["username"], $_POST["password"]);
-        if ($id == null) {
+        if (is_null($id)) {
             http_response_code(400);
             echo "";
         } else {
             session_start();
+            echo $id;
             $_SESSION["userId"] = $id;
             $_SESSION["username"] = $_POST["username"];
             http_response_code(200);
             echo $id;
         }
 
-    } else if ($action == "login") {
+    } else if ($action === "login") {
         $id = User::login($_POST["username"], $_POST["password"]);
-        if ($id == null) {
+        if (is_null($id)) {
             http_response_code(400);
-            echo "";
+            echo "baf";
         } else {
             session_start();
+
             $_SESSION["userId"] = $id;
             $_SESSION["username"] = $_POST["username"];
             http_response_code(200);
-            echo $id;
+
         }
-    } else if ($action == "logout") {
+    } else if ($action == "logout") { // not needed, handled in logout.php
         session_destroy();
         http_response_code(200);
     } else if ($action === "addMedia") {
         $mediaId = Media::createNew((string)$_POST["name"], "", "", (string)$_POST["poster"], (string)$_POST["imdbId"]);
 
-        if ($mediaId == null) {
+        if (is_null($mediaId)) {
             http_response_code(400);
             echo "bad params";
         } else {

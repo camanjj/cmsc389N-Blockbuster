@@ -76,7 +76,6 @@
 
     $('#loginForm').submit(function(e) {
         e.preventDefault();
-        console.log("test");
 
         let username = $('#lg-username').val();
         let password = $('#lg-password').val();
@@ -89,12 +88,13 @@
 
         // send request to server
         $.post("php/api.php", data, (data, status, xhr) => {
+            console.log(data);
             if (status === "success") {
                 // move to next page
                 window.location = "main.php";
             } else {
                 // there was an issue
-                alert("Wrong Login")
+                alert("Wrong Login");
             }
         });
 
@@ -126,7 +126,7 @@
                 window.location = "main.php";
             } else {
                 // there was an issue
-                alert("Issue creating account")
+                alert("Issue creating account");
             }
         });
 

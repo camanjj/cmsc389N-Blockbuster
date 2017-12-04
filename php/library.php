@@ -60,7 +60,7 @@ class Library implements JsonSerializable {
         $shared = [false, false, true];
 
         for($i = 0; $i < 3; $i++) {
-            $db_connection->query("INSERT INTO Library (user_id, name, description, is_shared) VALUES ('$userId', '$names[$i]', '$descs[$i]', $shared[$i])");
+            $db_connection->query("INSERT INTO Library (user_id, name, description, is_shared) VALUES ($userId, '$names[$i]', '$descs[$i]', $shared[$i])");
         }
 
     }

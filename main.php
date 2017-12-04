@@ -9,7 +9,7 @@ $libraries = Library::fetchUsersLibraries((int)$_SESSION["userId"]);
 
 $html = "<br><br><div class=\"card-deck\">";
 $color = false;
-//var_dump($libraries);
+
 foreach ($libraries as $lib) {
 
     $color = !$color;
