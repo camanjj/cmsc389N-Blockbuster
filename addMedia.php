@@ -7,8 +7,15 @@ session_start();
 
 
 $select = "<select id='libraries' class=\"custom-select mx-auto \">";
-foreach(Library::getLibraryNamesAndIds($_SESSION["userId"]) as $e) {
-    $select .= "<option value='{$e["id"]}'>" . $e["name"] . "</option>";
+$lib = Library::getLibraryNamesAndIds($_SESSION["userId"]);
+$libId = $_GET["libraryId"];
+
+foreach($lib as $e) {
+    if($e["id"] == $libId){
+      $select .= "<option selected value='{$e["id"]}'>" . $e["name"] . "</option>";
+    } else {
+      $select .= "<option value='{$e["id"]}'>" . $e["name"] . "</option>";
+    }
 //    echo implode($e);
 }
 $select .= "</select>";
@@ -47,7 +54,7 @@ $html = <<<BODY
 <br/>
 
 <button onclick="addMedia()" type="button" class="btn btn-primary offset-md-4 col-md-4 text-center">Add to Library</button>
-    
+
 <script>
 
     let selectedMedia;
@@ -91,14 +98,14 @@ $html = <<<BODY
         }
     });
 
-    
+
     // handle adding the media item to the selected library
     function addMedia() {
         if (selectedMedia == null) {
             alert("You have not selected a media item");
             return;
         }
-        
+
         let payload = {
             'action': "addMedia",
             'name': selectedMedia.Title,
@@ -106,13 +113,13 @@ $html = <<<BODY
             'poster': selectedMedia.Poster,
             'libraryId': $('option').filter(':selected').first().val()
         };
-        
+
         console.log(payload);
-        
+
         $.post("php/api.php", payload, (data, status, xhr) => {
             console.log(data);
             if (status === "success") {
-                
+
                 alert("Added " + selectedMedia.Title);
                 selectedMedia = null;
                 document.getElementById("form").reset();
@@ -120,17 +127,16 @@ $html = <<<BODY
                 $("#cardImage").attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABA‌​AACAUwAOw==');
                 $("#cardTitle").empty();
                 $("#cardContent").empty();
-                
+
             } else {
                 // there was an issue
                 alert("Issue saving media")
             }
         });
     }
-    
+
 </script>
 
 BODY;
 
 echo generatePage($html);
-
