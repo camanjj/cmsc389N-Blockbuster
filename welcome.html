@@ -24,12 +24,14 @@
     <div class="container">
         <h1 class="display-3 text-center">Welcome to...</h1>
         <div class="text-center"><img class="block-center" src="resources/Blockbuster_logo.svg" height="100"></div>
-        <p class="lead">A place to log and share your multimedia history</p>
+        <p class="lead text-center">A place to log and share your multimedia history</p>
 
         <hr class="my-4">
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="text-center">
+        <div class="btn-group " role="group" aria-label="Basic example">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">Login</button>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#register-modal">Register</button>
+        </div>
         </div>
     </div>
 </div>
@@ -89,6 +91,7 @@
         $.post("php/api.php", data, (data, status, xhr) => {
             if (status === "success") {
                 // move to next page
+                window.location = "main.php";
             } else {
                 // there was an issue
                 alert("Wrong Login")
@@ -120,6 +123,7 @@
             console.log(data);
             if (status === "success") {
                 // move to next page
+                window.location = "main.php";
             } else {
                 // there was an issue
                 alert("Issue creating account")
