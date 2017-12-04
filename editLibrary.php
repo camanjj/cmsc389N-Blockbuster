@@ -4,13 +4,23 @@ require_once "php/library.php";
 
 session_start();
 
-$lib = Library::getLibraryById($_GET["libraryId"]);
+$lib = Library::getLibraryById($_GET["libraryId"], $_SESSION["userId"]);
 
+$yesChecked;
+$noChecked;
+
+if($lib->is_shared == 0){
+  $yesChecked = "";
+  $noChecked = "checked";
+} else {
+  $noChecked = "";
+  $yesChecked = "checked";
+}
 
 $html = <<<BODY
 
 <br />
-<div class="mx-auto text-left">
+<div class="mx-auto text-center">
     <h2>Edit {$lib->name} Library Information:</h2>
 </div>
 
@@ -19,66 +29,64 @@ $html = <<<BODY
 
 <div class="offset-lg-3 col-lg-6">
 <form id="form">
-    <div class="input-group">
-        Library name:<input id="libName" name="search" type="text" class="form-control" placeholder="Search for..." >
-        <!--<span class="input-group-btn">-->
-            <!--<button class="btn btn-secondary" type="button">Search</button>-->
-        <!--</span>-->
+    <div class="form-group">
+        Library name:<br>
+        <input id="libName" name="search" type="text" class="form-control" placeholder="{$lib->name}" >
     </div>
+    <div class="form-group">
+        Library description:<br>
+        <input id="libDesc" name="search" type="text" class="form-control" placeholder="{$lib->description}" >
+    </div>
+    <div class="form-check form-check-inline">Share?:<br>
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="isShared" id="shared" value="1" $yesChecked>Yes
+      </label>
+    </div>
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="isShared" id="shared" value="0" $noChecked>No
+      </label>
+    </div><br>
+    <button type="button" class="btn btn-primary offset-md-4 col-md-4 text-center">Update Library</button>
     </form>
 </div>
 <br />
 
-<div id="mediaCard" class="card mx-auto" style="width: 20rem;">
-    <img id="cardImage" class="card-img-top mx-auto" style="max-width: 150px;">
-    <div class="card-body">
-        <h4 id="cardTitle" class="card-title"></h4>
-        <p id="cardContent" class="card-text"></p>
-        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-    </div>
-    $select
-</div>
-<br/>
 
-<button onclick="addMedia()" type="button" class="btn btn-primary offset-md-4 col-md-4 text-center">Add to Library</button>
+
 
 <script>
 
-    // handle adding the media item to the selected library
-    function addMedia() {
-        if (selectedMedia == null) {
-            alert("You have not selected a media item");
-            return;
+$('#form').submit(function(e) {
+    e.preventDefault();
+
+    let name = $('#libName').val();
+    let description = $('#libDesc').val();
+    let isShared = $('input[type=radio]').filter(':checked').first().val();
+
+    let data = {
+        "action": "editLibrary",
+        "name": name,
+        "description": description,
+        "is_shared": isShared,
+        "libId": {$lib->id}
+    };
+
+    // send request to server
+    $.post("php/api.php", data, (data, status, xhr) => {
+        console.log(data);
+        if (status === "success") {
+            // move to next page
+            window.location = "main.php";
+        } else {
+            // there was an issue
+            alert("Unable to update library");
         }
+    });
 
-        let payload = {
-            'action': "addMedia",
-            'name': selectedMedia.Title,
-            'imdbId': selectedMedia.imdbID,
-            'poster': selectedMedia.Poster,
-            'libraryId': $('option').filter(':selected').first().val()
-        };
+    return false;
+});
 
-        console.log(payload);
-
-        $.post("php/api.php", payload, (data, status, xhr) => {
-            console.log(data);
-            if (status === "success") {
-
-                alert("Added " + selectedMedia.Title);
-                selectedMedia = null;
-                document.getElementById("form").reset();
-                // clear the card
-                $("#cardImage").attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABA‌​AACAUwAOw==');
-                $("#cardTitle").empty();
-                $("#cardContent").empty();
-
-            } else {
-                // there was an issue
-                alert("Issue saving media")
-            }
-        });
-    }
 
 </script>
 
