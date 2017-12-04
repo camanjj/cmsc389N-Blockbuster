@@ -63,7 +63,7 @@ class Library implements JsonSerializable {
 
     function updateLibrary(): bool {
         global $db_connection;
-        if (!$db_connection->query("UPDATE Library SET name='$this->name', description='$this->description', is_shared={(int)this->is_shared} WHERE id=$this->id")) {
+        if (!$db_connection->query("UPDATE Library SET name='$this->name', description='$this->description', is_shared={$this->is_shared} WHERE id=$this->id")) {
             trigger_error('Invalid query: ' . $db_connection->error);
         }
         return $result === TRUE;
