@@ -55,12 +55,18 @@ class Library implements JsonSerializable {
     {
 
         global $db_connection;
-        $names = ["Watch Again", "Current", "Public"];
-        $descs = ["It was soo good I want to watch it again", "Currently keeping up with", "These are my recommendations to others"];
-        $shared = [false, false, true];
+        $names = array(0 => "Watch Again", "Current", "Public");
+        $descs = array(0 => "It was soo good I want to watch it again", "Currently keeping up with", "These are my recommendations to others");
+        $shared = array(0 => 0, 0, 1);
 
+        echo  $names[0];
+        var_dump($names);
         for($i = 0; $i < 3; $i++) {
-            $db_connection->query("INSERT INTO Library (user_id, name, description, is_shared) VALUES ($userId, '$names[$i]', '$descs[$i]', $shared[$i])");
+            echo $i;
+            print $names[$i];
+            if (!$db_connection->query("INSERT INTO Library (user_id, name, description, is_shared) VALUES ($userId, '$names[$i]', '$descs[$i]', $shared[$i])")) {
+                trigger_error('Invalid query: ' . $db_connection->error);
+            }
         }
 
     }
